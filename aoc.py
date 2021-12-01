@@ -31,6 +31,6 @@ r = requests.get(url, allow_redirects=True, cookies = cookies)
 open(day + '.in', 'wb').write(r.content)
 
 pythonfile = str(day) + '.py'
-open(pythonfile, 'w').write("#!/usr/bin/env python3\nfile1 = '" + str(day) + ".in'\n\n" + "with open(file1, 'r') as f:\n    for v in f:\n")
+open(pythonfile, 'w').write("#!/usr/bin/env python3\nfile1 = '" + str(day) + ".in'\n\n" + "input = [x.strip() for x in open(file1, 'r').readlines()\nfor v in input:\n")
 s = os.stat(pythonfile)
 os.chmod(pythonfile, s.st_mode | stat.S_IEXEC)
