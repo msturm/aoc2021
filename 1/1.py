@@ -1,23 +1,16 @@
 #!/usr/bin/env python3
 file1 = '1.in'
+count1, count2 = 0, 0
+depths = [int(x.strip()) for x in open(file1, 'r').readlines()]
 
-count = 0
-count2 = 0
-prev = -1
-psum = 0
-with open(file1, 'r') as f:
-    elem = [int(x.strip()) for x in f.readlines()]
-    for v in elem:
-        if v > prev:
-            count += 1
-        prev = v
+for n in range(1, len(depths)):
+    if depths[n] > depths[n-1]:
+        count1 += 1
 
-    for n in range(2, len(elem)):
+# in sliding window, 2 elements are always the same, so just compare first from previous and current one
+for n in range(3, len(depths)):
+    if depths[n] > depths[n - 3]:
+        count2 += 1
 
-        w = elem[n-2] + elem[n-1] + elem[n]
-        if w > psum:
-            count2 += 1
-        psum = w
-
-print("part 1: {0}".format(count-1))
-print("part 2: {0}".format(count2-1))
+print("part 1: {0}".format(count1))
+print("part 2: {0}".format(count2))
