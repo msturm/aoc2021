@@ -37,21 +37,21 @@ for lp in LP:
     while len(BS) > prev_size:
         BS[lp] = grid[lp]
         prev_size = len(BS)
-        print(BS, len(BS), prev_size)
+        # print(BS, len(BS), prev_size)
         NP = {}
         for k in BS.keys():
             r = k[0]
             c = k[1]
             for dc in [-1, 0, 1]:
                 if r >= 0 and c+dc >= 0 and r < max_r and c+dc < max_c and grid[(r, c+dc)] < 9 and (r, c+dc) not in BS:
-                    print(r, c+dc, grid[(r, c+dc)])
+                    # print(r, c+dc, grid[(r, c+dc)])
                     NP[(r, c+dc)] = grid[(r, c+dc)]
             for dr in [-1, 0, 1]:
                 if r+dr >= 0 and c >= 0 and r+dr < max_r and c < max_c and grid[(r+dr, c)] < 9 and (r+dr, c) not in BS:
                     NP[(r+dr, c)] = grid[(r+dr, c)]
-            print(NP)
+            # print(NP)
         BS.update(NP)
-    print(BS)
+    # print(BS)
     BS_sizes.append(len(BS))
 
 
