@@ -21,7 +21,7 @@ def visit(cave, path, dbl_sc = ''):
                 visit(c, path + [cave], dbl_sc)
             elif c.islower() and c not in path:
                 visit(c, path + [cave], dbl_sc)
-            elif c.islower() and c != 'start' and c != 'end' and dbl_sc == '':
+            elif c.islower() and c not in ['start', 'end'] and dbl_sc == '':
                 visit(c, path + [cave], c)
 
     else:
