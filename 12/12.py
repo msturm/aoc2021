@@ -1,21 +1,16 @@
 #!/usr/bin/env python3
 from collections import Counter
+from collections import defaultdict
 file1 = '12.in'
 
 input = [x.strip() for x in open(file1, 'r').readlines()]
-C = {}
+C = defaultdict(list)
 ans = 0
 ans1 = 0
 for v in input:
     n1, n2 = v.split('-')
-    if n1 not in C:
-        C[n1] = [n2]
-    else:
-        C[n1] += [n2]
-    if n2 not in C:
-        C[n2] = [n1]
-    else:
-        C[n2] += [n1]
+    C[n1] += [n2]
+    C[n2] += [n1]
 print(C)
 
 def visit(cave, path, dbl_sc = ''):
