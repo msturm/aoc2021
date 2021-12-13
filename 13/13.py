@@ -17,13 +17,8 @@ for v in input:
         a, v = [x for x in v.split(' ')[2].split('=')]
         F.append((a, int(v)))
 
-
-print(sorted(G))
-print("folds")
-print(F)
-
+ans1 = 0
 for a, v in F:
-    print(a, v)
     DG = set()
     if a == 'x':
         # fold left
@@ -37,9 +32,11 @@ for a, v in F:
             if r > v:
                 r = v-(r-v)
             DG.add((r, c))
+    if ans1 == 0:
+        ans1 = len(DG)
     G = DG
-    print(sorted(G))
-print(len(G))
+
+print("P1", ans1)
 # P1 35 min 29 sec
 ans2 = ""
 max_r = max([r for r, c in G])
@@ -51,5 +48,7 @@ for r in range(max_r + 1):
         else:
             ans2 += ' '
     ans2 += "\n"
+
+print("P2")
 print(ans2)
 # P2 9 min 18 sec
