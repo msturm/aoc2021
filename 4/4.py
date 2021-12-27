@@ -5,16 +5,16 @@ input = [x.strip() for x in open(file1, 'r').readlines()]
 
 N = [int(x) for x in input[0].split(',')]
 print(N)
-B = []
+beacons = []
 board = []
 for v in input[2:]:
     if v == '':
-        B.append(board)
+        beacons.append(board)
         board = []
     else:
         vline = [int(x) for x in v.split()]
         board.append(vline)
-B.append(board)
+beacons.append(board)
 best_board = 0
 best_board_moment = 1000
 best_board_score = 0
@@ -22,7 +22,7 @@ worst_board = 0
 worst_board_moment = 0
 worst_board_score = 0
 
-for boardnum, b in enumerate(B):
+for boardnum, b in enumerate(beacons):
     hlines = b
     vlines = []
 
@@ -59,7 +59,7 @@ for boardnum, b in enumerate(B):
     # winning_board = alllinesBingo.index(bingomoment)
 
 # winning board
-print("board count: {0}".format(len(B)))
+print("board count: {0}".format(len(beacons)))
 print("best board: {0}".format(best_board))
 print("P1: " + str(best_board_score))
 
