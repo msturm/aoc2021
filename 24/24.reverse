@@ -1,0 +1,344 @@
+inp w
+mul x 0
+add x z
+mod x 26
+div z 1 <------
+add x 10 <------
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 2 <-------
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 10
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 4
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 14
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 8
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 11
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 7
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 14
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 12
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -14
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 7
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 26
+add x 0
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 10
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 10
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 14
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -10
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 2
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 13
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 6
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -12
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 8
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -3
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 11
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -11
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 5
+mul y x
+add z y
+inp w
+mul x 0  x = 0
+add x z  x = z
+mod x 26 x=z % 26
+div z 26 z=z / 26 <------ V1
+add x -2 x = (z%26) -2 <------------ V2
+eql x w  x=1 if ((z%26) -2) == w else 0
+eql x 0  x=0 if ((z%26) -2) == w else 1
+mul y 0  y=0
+add y 25 y=25
+mul y x  y=25 if ((z%26) -2) != w  else 0
+add y 1  y= 26 if ((z%26) -2) != w  else 1
+mul z y  z= (z/26) * (26 if ((z%26) -2) != w  else 1)
+mul y 0  y = 0
+add y w  y = w
+add y 11 y = w+11 <----------- V3
+mul y x  y = (w+11) * (0 if ((z%26) - 2) == w else 1) --> should be == z
+add z y  z=((z/26) * (26 if ((z%26) -2) != w else 1)) + ((w+11)*(0 if ((z%26) -2) == w else 1)) --> to be 0, y == z
+
+((z/26) * (26 if ((z%26) -2) != w else 1)) == ((w+11)*(0 if ((z%26) -2) == w else 1))
+
+z = z/V1
+if (z % 26) + V2 != inp:
+        z = z*26 + inp + V3
+
+# we can ignore the other option because if positive, V2 is always greater then 9, and 0 < w < 10, so (z%26) + V2) == w can never be true
+
+# if V2 is positive, the condition is always met (because V2 > 9 if it is positive).
+# so then, z = z * 26 + inp + v3
+# if V2 is negative, z is always divided by 26, so z = z + inp + v3. (because the z*26 is negated by z/26)
+# in order to end with 0 at the end, where V2 = -2 and V3 = 11, so then 0 = z + inp + 11
+# To have the maximal value for inp, which is inp = 9, z should be 0 = z + 9 + 11, z = -20
+
+inp[0] + 2
+inp[1] + 4
+inp[2] + 8
+inp[3] + 7
+inp[4] + 12
+inp[5] = popped_val - 14
+inp[6] = popped_val - 0
+inp[7] + 14
+inp[8] = popped_val - 10
+inp[9] + 6
+inp[10] = popped_val - 12
+inp[11] = popped_val - 3
+inp[12] = popped_val - 11
+inp[13] = popped_val - 2
+
+becomes for depending vars:
+
+inp[5] = inp[4] - 2
+inp[6] = inp[3] + 7
+inp[8] = inp[7] + 4
+inp[10] = inp[9] - 6
+inp[11] = inp[2] + 5
+inp[12] = inp[1] - 7
+inp[13] = inp[0]
+
+min values:
+inp[0] = 1
+inp[1] = 8
+inp[2] = 1
+inp[3] = 1
+inp[4] = 3
+inp[5] = 1
+inp[6] = 8
+inp[7] = 1
+inp[8] = 5
+inp[9] = 7
+inp[10] = 1
+inp[11] = 6
+inp[12] = 1
+inp[13] = 1
+18113181571611
+
+max values:
+inp[0] = 9
+inp[1] = 9
+inp[2] = 4
+inp[3] = 2
+inp[4] = 9
+inp[5] = 7
+inp[6] = 9
+inp[7] = 5
+inp[8] = 9
+inp[9] = 9
+inp[10] = 3
+inp[11] = 9
+inp[12] = 2
+inp[13] = 9
+99429795993929
+
+
+
+Variables:
+V1 V2 V3
+1 10 2
+1 10 4
+1 14 8
+1 11 7
+1 14 12
+26 -14 7
+26 0 10
+1 10 14
+26 -10 2
+1 13 6
+26 -12 8
+26 -3 11
+26 -11 5
+26 -2 11
